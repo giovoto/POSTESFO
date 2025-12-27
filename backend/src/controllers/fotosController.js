@@ -2,7 +2,7 @@ import { Foto } from '../models/Foto.js';
 import { Poste } from '../models/Poste.js';
 import sharp from 'sharp';
 import path from 'path';
-import fs from 'fs';
+import { put, del } from '@vercel/blob';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,30 +38,22 @@ export const uploadFoto = async (req, res) => {
             });
         }
 
-        const uploadDir = path.join(__dirname, '../../uploads');
-        const thumbnailDir = path.join(uploadDir, 'thumbnails');
-
-        // Crear directorio de thumbnails si no existe
-        if (!fs.existsSync(thumbnailDir)) {
-            fs.mkdirSync(thumbnailDir, { recursive: true });
-        }
-
-        // Generar thumbnail
-        const thumbnailFilename = `thumb-${req.file.filename}`;
-        const thumbnailPath = path.join(thumbnailDir, thumbnailFilename);
-
-        await sharp(req.file.path)
-            .resize(300, 300, { fit: 'cover' })
-            .jpeg({ quality: 80 })
-            .toFile(thumbnailPath);
+        // Subir a Vercel Blob
+        const blob = await put(req.file.originalname, req.file.buffer, {
+            access: 'public',
+            contentType: req.file.mimetype
+        });
 
         // Crear registro en base de datos
+        // Nota: Ya no generamos thumbnails separados, usamos la misma URL
+        // O podríamos generar thumbnails con un servicio externo o sharp en memoria si fuera crítico,
+        // pero por simplicidad en serverless, usaremos la imagen original o optimizada por el frontend.
         const foto = await Foto.create({
             poste_id,
             tipo,
-            url: `/uploads/${req.file.filename}`,
-            thumbnail_url: `/uploads/thumbnails/${thumbnailFilename}`,
-            filename: req.file.filename,
+            url: blob.url,
+            thumbnail_url: blob.url, // Vercel Blob no redimensiona auto, usamos la misma por ahora
+            filename: blob.pathname, // Guardamos el pathname del blob
             size: req.file.size,
             metadata: {
                 originalname: req.file.originalname,
@@ -107,16 +99,13 @@ export const deleteFoto = async (req, res) => {
             return res.status(404).json({ error: 'Foto no encontrada' });
         }
 
-        // Eliminar archivos del sistema
-        const uploadDir = path.join(__dirname, '../../uploads');
-        const fotoPath = path.join(uploadDir, foto.filename);
-        const thumbnailPath = path.join(uploadDir, 'thumbnails', `thumb-${foto.filename}`);
-
-        if (fs.existsSync(fotoPath)) {
-            fs.unlinkSync(fotoPath);
-        }
-        if (fs.existsSync(thumbnailPath)) {
-            fs.unlinkSync(thumbnailPath);
+        // Eliminar de Vercel Blob
+        if (foto.url) {
+            try {
+                await del(foto.url);
+            } catch (blobError) {
+                console.warn('Error eliminando blob (puede que ya no exista):', blobError);
+            }
         }
 
         // Eliminar de base de datos
