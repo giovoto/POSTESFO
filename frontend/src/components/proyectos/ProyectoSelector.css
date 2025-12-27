@@ -1,0 +1,159 @@
+/* Proyecto Selector - Apple Style */
+.proyecto-selector-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.proyecto-selector-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    min-width: 140px;
+}
+
+.proyecto-selector-button:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+.proyecto-selector-button:active {
+    transform: scale(0.98);
+}
+
+.proyecto-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-color);
+}
+
+.proyecto-nombre {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.proyecto-selector-button.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu - Apple Style */
+.proyecto-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 8px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.proyecto-dropdown.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.proyecto-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.proyecto-dropdown-item:hover {
+    background: rgba(72, 221, 10, 0.08);
+}
+
+.proyecto-dropdown-item.active {
+    background: rgba(72, 221, 10, 0.12);
+    font-weight: 600;
+}
+
+.proyecto-dropdown-item-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.proyecto-dropdown-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.proyecto-dropdown-item-nombre {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.proyecto-dropdown-item-codigo {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.proyecto-check {
+    width: 16px;
+    height: 16px;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+/* Badge para un solo proyecto */
+.proyecto-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: rgba(72, 221, 10, 0.1);
+    border: 1px solid rgba(72, 221, 10, 0.2);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+.proyecto-badge-icon {
+    width: 14px;
+    height: 14px;
+}
+
+/* Loading State */
+.proyecto-loading {
+    padding: 6px 14px;
+    color: var(--text-secondary);
+    font-size: 13px;
+}

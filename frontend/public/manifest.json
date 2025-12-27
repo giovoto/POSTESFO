@@ -1,0 +1,17 @@
+{
+    "name": "Sistema de Postes - Fibra Óptica",
+    "short_name": "Postes FO",
+    "description": "Sistema de documentación de postes de fibra óptica con geolocalización",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1e40af",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "/vite.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

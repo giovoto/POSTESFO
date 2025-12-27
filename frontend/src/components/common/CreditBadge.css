@@ -1,0 +1,43 @@
+/* Credit Badge - Al final del contenido (no fijo) */
+.credit-badge {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: #FFFFFF;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 auto;
+}
+
+.credit-badge-container {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+}
+
+/* Pulse Heart */
+.credit-badge .pulse-heart {
+    color: #ef1b55;
+    animation-name: pulse-heart;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes pulse-heart {
+    0% {
+        transform: scale(1.1);
+    }
+
+    50% {
+        transform: scale(0.8);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

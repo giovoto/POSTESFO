@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* User Defined Palette from style.css */
+        --primary-color: #42CB09;
+        /* Solid green - user requested */
+        --primary-dark: #39B007;
+        /* Darker variant for hovers */
+
+        --bg-page: #ffffff;
+        --bg-container: #ededed;
+        --bg-card: #ffffff;
+
+        --text-main: #000000;
+        --text-muted: #6b7280;
+        --border-color: #cfcfcf;
+
+        --badge-bg: #e8f5e9;
+        --badge-text: #2e7d32;
+
+        /* Mapped System Variables */
+        --success-color: #48dd0a;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --info-color: #3b82f6;
+
+        --bg-primary: var(--bg-page);
+        --bg-secondary: var(--bg-card);
+        --bg-tertiary: var(--bg-container);
+
+        --text-primary: var(--text-main);
+        --text-secondary: var(--text-muted);
+
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.05);
+        /* User defined shadow */
+        --transition-normal: 0.3s;
+    }
+
+    body {
+        background-color: var(--bg-container);
+        /* Match user container bg */
+        color: var(--text-primary);
+        font-family: 'Host Grotesk', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+}

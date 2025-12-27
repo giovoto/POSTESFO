@@ -1,0 +1,4 @@
+/* Opcional: Ajustes específicos si Tailwind no cubre todo */
+.sidebar-layout-container {
+    height: 100vh;
+}
