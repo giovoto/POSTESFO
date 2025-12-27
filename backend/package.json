@@ -2,13 +2,11 @@
   "name": "fiber-optic-backend",
   "version": "1.0.0",
   "description": "Backend API para sistema de documentación de postes de fibra óptica",
-  "main": "src/server.js",
+  "main": "api/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
     "test": "npx vitest",
-    "init-db": "node src/config/initDatabase.js"
+    "init-db": "node config/initDatabase.js"
   },
   "keywords": [
     "fiber-optic",
@@ -19,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@vercel/blob": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "date-fns": "^3.0.6",
