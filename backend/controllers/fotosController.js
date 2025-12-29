@@ -2,7 +2,7 @@ import { Foto } from '../models/Foto.js';
 import { Poste } from '../models/Poste.js';
 import sharp from 'sharp';
 import path from 'path';
-import { put, del } from '@vercel/blob';
+import { supabase } from '../config/supabase.js';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,22 +38,38 @@ export const uploadFoto = async (req, res) => {
             });
         }
 
-        // Subir a Vercel Blob
-        const blob = await put(req.file.originalname, req.file.buffer, {
-            access: 'public',
-            contentType: req.file.mimetype
-        });
+        // Generar nombre único para el archivo
+        const timestamp = Date.now();
+        const filename = `${poste_id}/${tipo}_${timestamp}_${req.file.originalname}`;
+
+        // Subir a Supabase Storage
+        const { data, error: uploadError } = await supabase.storage
+            .from('postes-fotos')
+            .upload(filename, req.file.buffer, {
+                contentType: req.file.mimetype,
+                upsert: false
+            });
+
+        if (uploadError) {
+            console.error('Error uploading to Supabase:', uploadError);
+            return res.status(500).json({
+                error: 'Error al subir la foto a Supabase',
+                details: uploadError.message
+            });
+        }
+
+        // Obtener URL pública
+        const { data: { publicUrl } } = supabase.storage
+            .from('postes-fotos')
+            .getPublicUrl(filename);
 
         // Crear registro en base de datos
-        // Nota: Ya no generamos thumbnails separados, usamos la misma URL
-        // O podríamos generar thumbnails con un servicio externo o sharp en memoria si fuera crítico,
-        // pero por simplicidad en serverless, usaremos la imagen original o optimizada por el frontend.
         const foto = await Foto.create({
             poste_id,
             tipo,
-            url: blob.url,
-            thumbnail_url: blob.url, // Vercel Blob no redimensiona auto, usamos la misma por ahora
-            filename: blob.pathname, // Guardamos el pathname del blob
+            url: publicUrl,
+            thumbnail_url: publicUrl, // Usamos la misma URL por ahora
+            filename: filename,
             size: req.file.size,
             metadata: {
                 originalname: req.file.originalname,
