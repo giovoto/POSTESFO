@@ -37,13 +37,9 @@ export const AuthProvider = ({ children }) => {
             console.error("Login error DETAILS:", error.response || error);
             let errorMessage = 'Error al iniciar sesión';
 
-            if (error.response?.data?.error) {
-                const apiError = error.response.data.error;
-                if (typeof apiError === 'object') {
-                    errorMessage = apiError.message || apiError.code || JSON.stringify(apiError);
-                } else {
-                    errorMessage = String(apiError);
-                }
+            if (error.response?.data) {
+                // Si el backend nos manda un JSON detallado
+                errorMessage = JSON.stringify(error.response.data, null, 2);
             } else if (error.message) {
                 errorMessage = error.message;
             }
