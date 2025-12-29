@@ -115,6 +115,7 @@ export default async function handler(req, res) {
         res.status(200).json({
             status: 'OK',
             message: 'Schema initialized & Admin created successfully!',
+            adminUser: adminCheck.rows[0],
             timestamp: new Date().toISOString()
         });
 
