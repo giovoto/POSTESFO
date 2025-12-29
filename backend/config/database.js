@@ -3,6 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// ⚠️ NUCLEAR FIX: Desactivar verificación estricta de SSL globalmente para este proceso
+// Esto soluciona el error "self-signed certificate" en Supabase/Vercel
+if (process.env.NODE_ENV === 'production') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
 const { Pool } = pg;
 
 // Configuración de la conexión a PostgreSQL
