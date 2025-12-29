@@ -112,6 +112,13 @@ export default async function handler(req, res) {
         res.status(500).json({
             status: 'Error',
             error: error.message,
+            debug: {
+                hasDatabaseUrl: !!process.env.DATABASE_URL,
+                hasPostgresUrl: !!process.env.POSTGRES_URL,
+                hasSupabaseUrl: !!process.env.SUPABASE_URL,
+                postgresHost: process.env.POSTGRES_HOST || 'undefined',
+                env: process.env.NODE_ENV
+            },
             stack: error.stack
         });
     }
