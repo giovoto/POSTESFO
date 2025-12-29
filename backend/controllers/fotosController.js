@@ -67,7 +67,11 @@ export const uploadFoto = async (req, res) => {
         });
     } catch (error) {
         console.error('Error al subir foto:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        res.status(500).json({
+            error: error.message,
+            details: error.stack,
+            type: 'UploadFotoError'
+        });
     }
 };
 
