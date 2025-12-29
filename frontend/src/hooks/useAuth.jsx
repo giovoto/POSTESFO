@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
             return { success: true };
         } catch (error) {
-            console.error("Login error:", error);
+            console.error("Login error DETAILS:", error.response || error);
             let errorMessage = 'Error al iniciar sesión';
 
             if (error.response?.data?.error) {
