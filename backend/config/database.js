@@ -11,7 +11,8 @@ const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
 const pool = new Pool({
   connectionString: connectionString, // Use full string, Supabase might need params
-  ssl: { rejectUnauthorized: false },
+  ssl: true, // Try simple 'true' first, or object
+  ssl: { rejectUnauthorized: false }, // Security risk allowed for managed DBs without proper CA setup
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
 });
