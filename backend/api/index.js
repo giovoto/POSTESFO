@@ -139,4 +139,6 @@ app.use('/api/proyectos', proyectosRoutes);
 // ❌ NO app.listen()
 // ❌ NO ruta '/'
 
+app.use(errorHandler);
+
 export default app;
