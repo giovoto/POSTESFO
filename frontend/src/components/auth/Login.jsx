@@ -50,7 +50,9 @@ export const Login = () => {
                     {error && (
                         <div className="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg flex items-center shadow-sm">
                             <MdWarning className="h-6 w-6 text-red-500 mr-3 flex-shrink-0" />
-                            <p className="text-red-700 text-sm font-medium">{error}</p>
+                            <p className="text-red-700 text-sm font-medium">
+                                {typeof error === 'object' ? JSON.stringify(error) : error}
+                            </p>
                         </div>
                     )}
 

@@ -34,9 +34,23 @@ export const AuthProvider = ({ children }) => {
 
             return { success: true };
         } catch (error) {
+            console.error("Login error:", error);
+            let errorMessage = 'Error al iniciar sesión';
+
+            if (error.response?.data?.error) {
+                const apiError = error.response.data.error;
+                if (typeof apiError === 'object') {
+                    errorMessage = apiError.message || apiError.code || JSON.stringify(apiError);
+                } else {
+                    errorMessage = String(apiError);
+                }
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+
             return {
                 success: false,
-                error: error.response?.data?.error || 'Error al iniciar sesión'
+                error: errorMessage
             };
         }
     };
