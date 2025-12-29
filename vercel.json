@@ -6,8 +6,24 @@
             "destination": "/backend/api/index.js"
         },
         {
+            "source": "/assets/(.*)",
+            "destination": "/frontend/assets/$1"
+        },
+        {
+            "source": "/(.*)\\.(png|jpg|jpeg|svg|ico|json|js|css|webmanifest)",
+            "destination": "/frontend/$1.$2"
+        },
+        {
+            "source": "/sw.js",
+            "destination": "/frontend/sw.js"
+        },
+        {
+            "source": "/workbox-(.*).js",
+            "destination": "/frontend/workbox-$1.js"
+        },
+        {
             "source": "/(.*)",
-            "destination": "/index.html"
+            "destination": "/frontend/index.html"
         }
     ],
     "builds": [
