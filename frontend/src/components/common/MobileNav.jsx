@@ -10,9 +10,9 @@ export const MobileNav = () => {
 
     const navItems = [
         { path: '/dashboard', icon: MdHome, label: 'Inicio' },
-        { path: '/postes', icon: MdMap, label: 'Postes' },
-        { path: '/proyectos', icon: MdFolder, label: 'Proyectos' },
-        { path: '/perfil', icon: MdPerson, label: 'Perfil' }
+        { path: '/mapa', icon: MdMap, label: 'Mapa' },
+        { path: '/postes', icon: MdFolder, label: 'Postes' },
+        { path: '/proyectos', icon: MdPerson, label: 'Proyectos' }
     ];
 
     return (
