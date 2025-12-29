@@ -2,6 +2,10 @@
     "version": 2,
     "rewrites": [
         {
+            "source": "/api/init",
+            "destination": "/backend/api/init.js"
+        },
+        {
             "source": "/api/health",
             "destination": "/backend/api/index.js"
         },
@@ -35,6 +39,10 @@
         }
     ],
     "builds": [
+        {
+            "src": "backend/api/init.js",
+            "use": "@vercel/node"
+        },
         {
             "src": "backend/api/index.js",
             "use": "@vercel/node"
