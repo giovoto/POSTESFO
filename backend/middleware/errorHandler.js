@@ -36,6 +36,12 @@ export const errorHandler = (err, req, res, next) => {
     } else if (err.code === '23503') { // Foreign key violation
         status = 400;
         message = 'Referencia inválida a otro registro';
+    } else if (err.code === '28P01') {
+        status = 500;
+        message = 'Error de autenticación con la base de datos (Password incorrecto).';
+    } else if (err.code === '3D000') {
+        status = 500;
+        message = 'La base de datos especificada no existe.';
     } else if (err.name === 'JsonWebTokenError') {
         status = 401;
         message = 'Token inválido. Por favor inicie sesión de nuevo.';
