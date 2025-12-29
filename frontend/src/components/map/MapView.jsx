@@ -6,7 +6,7 @@ import { useProyecto } from '../../hooks/useProyecto.jsx';
 import { Loader } from '../common/Loader';
 import { Navbar } from '../common/Navbar';
 import 'leaflet/dist/leaflet.css';
-import { MdPlace } from 'react-icons/md';
+import { MdPlace, MdMenu, MdClose } from 'react-icons/md';
 
 // Fix para iconos de Leaflet
 import L from 'leaflet';
@@ -44,6 +44,7 @@ export const MapView = () => {
     const [loading, setLoading] = useState(true);
     const [mapCenter, setMapCenter] = useState(null);
     const [selectedPoste, setSelectedPoste] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         if (proyectoActivo) {
@@ -77,9 +78,46 @@ export const MapView = () => {
         <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-                {/* Sidebar */}
-                <div style={{ width: '300px', background: 'white', borderRight: '1px solid #e5e7eb', overflowY: 'auto', padding: '20px' }}>
+            <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
+                {/* Toggle Button - Solo móvil */}
+                <button
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        zIndex: 1000,
+                        background: 'white',
+                        border: '1px solid #e5e7eb',
+                        borderRadius: '8px',
+                        padding: '10px',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                        display: 'block'
+                    }}
+                    className="md:hidden"
+                >
+                    {sidebarOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
+                </button>
+
+                {/* Sidebar - Responsive */}
+                <div
+                    style={{
+                        width: '300px',
+                        background: 'white',
+                        borderRight: '1px solid #e5e7eb',
+                        overflowY: 'auto',
+                        padding: '20px',
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        left: sidebarOpen ? 0 : '-300px',
+                        transition: 'left 0.3s ease',
+                        zIndex: 999,
+                        boxShadow: sidebarOpen ? '2px 0 10px rgba(0,0,0,0.1)' : 'none'
+                    }}
+                    className="md:relative md:left-0"
+                >
                     <h3 style={{ marginBottom: '10px', fontSize: '18px', fontWeight: 'bold' }}>
                         Postes: {postes.length}
                     </h3>
@@ -99,6 +137,10 @@ export const MapView = () => {
                             onClick={() => {
                                 setSelectedPoste(p);
                                 setMapCenter([parseFloat(p.latitud), parseFloat(p.longitud)]);
+                                // Cerrar sidebar en móvil al seleccionar
+                                if (window.innerWidth < 768) {
+                                    setSidebarOpen(false);
+                                }
                             }}
                             onDoubleClick={() => navigate(`/postes/${p.id}`)}
                         >
