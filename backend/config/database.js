@@ -6,9 +6,12 @@ dotenv.config();
 const { Pool } = pg;
 
 // Configuración de la conexión a PostgreSQL
+// Priorizar POSTGRES_URL (Supabase Pooled)
+const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL;
+
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.SUPABASE_URL,
-  ssl: { rejectUnauthorized: false }, // Force SSL for cloud DBs
+  connectionString: connectionString ? connectionString.split('?')[0] : undefined, // Strip params to prevent issues
+  ssl: { rejectUnauthorized: false },
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
 });
