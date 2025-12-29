@@ -21,10 +21,28 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: process.env.FRONTEND_URL || '*',
-    credentials: true
-}));
+app.use((req, res, next) => {
+    // Manually set CORS headers for serverless preflight
+    const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:5173', 'https://postes-frontend.vercel.app'];
+    const origin = req.headers.origin;
+
+    if (allowedOrigins.includes(origin) || !origin) {
+        res.setHeader('Access-Control-Allow-Origin', origin || '*');
+    } else {
+        res.setHeader('Access-Control-Allow-Origin', '*'); // Fallback permissive
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    next();
+});
+
+// app.use(cors(...)); // Replaced by manual middleware for full control
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
