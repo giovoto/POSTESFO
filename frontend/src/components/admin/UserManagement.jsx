@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth.jsx';
 import { Navbar } from '../common/Navbar';
 import { Loader } from '../common/Loader';
 import { UserCreateModal } from './UserCreateModal';
+import { UserEditModal } from './UserEditModal';
 import { UserProyectosModal } from './UserProyectosModal';
 import { useToast } from '../common/Toast';
 import { MdAdd, MdDelete, MdEdit, MdAssignment, MdAdminPanelSettings, MdPerson, MdCheckCircle, MdCancel, MdWarning } from 'react-icons/md';
@@ -303,6 +304,13 @@ export const UserManagement = () => {
                 isOpen={showCreateModal}
                 onClose={() => setShowCreateModal(false)}
                 onUserCreated={loadUsers}
+            />
+
+            <UserEditModal
+                isOpen={!!editingUser}
+                onClose={() => setEditingUser(null)}
+                user={editingUser}
+                onUserUpdated={loadUsers}
             />
 
             <UserProyectosModal

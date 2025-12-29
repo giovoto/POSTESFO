@@ -17,18 +17,21 @@ export const UserProyectosModal = ({ isOpen, onClose, user, onAssign }) => {
     const loadData = async () => {
         try {
             setLoading(true);
-            const [proyectosRes] = await Promise.all([
-                proyectosAPI.getAll()
+            const [proyectosRes, userProyectosRes] = await Promise.all([
+                proyectosAPI.getAll(),
+                proyectosAPI.getUserProyectos(user.id)
             ]);
 
             const allProyectos = proyectosRes.data.proyectos || [];
             setProyectos(allProyectos);
 
             // Cargar proyectos del usuario
-            const userProyectosIds = []; // Aquí deberías cargar los proyectos del usuario
+            const userProyectosIds = (userProyectosRes.data || []).map(p => p.proyecto_id);
             setUserProyectos(userProyectosIds);
         } catch (error) {
             console.error('Error al cargar proyectos:', error);
+            // Si falla, al menos mostrar los proyectos disponibles
+            setUserProyectos([]);
         } finally {
             setLoading(false);
         }

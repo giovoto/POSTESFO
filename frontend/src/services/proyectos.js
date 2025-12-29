@@ -27,6 +27,9 @@ export const proyectosAPI = {
     removeUser: (proyectoId, userId) =>
         api.delete(`/proyectos/${proyectoId}/users/${userId}`),
 
+    // Obtener proyectos de un usuario
+    getUserProyectos: (userId) => api.get(`/users/${userId}/proyectos`),
+
     // Obtener estadísticas del proyecto
     getStats: (proyectoId) => api.get(`/proyectos/${proyectoId}/stats`)
 };
