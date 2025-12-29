@@ -7,6 +7,7 @@ import { Loader } from './components/common/Loader';
 import { Login } from './components/auth/Login';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { MapView } from './components/map/MapView'; // EAGER LOAD TO DEBUG
+import { MobileNav } from './components/common/MobileNav';
 
 // Lazy load heavy components
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard').then(module => ({ default: module.Dashboard })));
@@ -150,6 +151,9 @@ function App() {
                         />
                     </Routes>
                 </Suspense>
+
+                {/* Mobile Navigation - Only show when logged in */}
+                {user && <MobileNav />}
             </Router>
         </>
     );
