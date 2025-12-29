@@ -75,7 +75,7 @@ export const MapView = () => {
         : [4.60971, -74.08175];
 
     return (
-        <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
             <div style={{ flex: 1, display: 'flex', overflow: 'hidden', position: 'relative' }}>
@@ -156,18 +156,13 @@ export const MapView = () => {
                 </div>
 
                 {/* MAPA */}
-                <div style={{ flex: 1, position: 'relative' }}>
+                <div style={{ flex: 1, position: 'relative', height: 'calc(100vh - 64px - 70px)' }} className="md:h-auto">
                     <MapContainer
                         center={initialCenter}
                         zoom={13}
                         style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            height: '100%',
-                            width: '100%'
+                            width: '100%',
+                            height: '100%'
                         }}
                     >
                         <TileLayer
