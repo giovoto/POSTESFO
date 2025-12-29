@@ -29,8 +29,11 @@ export const authenticate = (req, res, next) => {
 
         next();
     } catch (error) {
+        console.error('Auth middleware error:', error.message);
+        console.log('Token verification failed for:', req.headers.authorization?.substring(0, 20) + '...');
         return res.status(401).json({
-            error: 'Token inválido o expirado.'
+            error: 'Token inválido o expirado.',
+            debug: error.message
         });
     }
 };
