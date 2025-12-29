@@ -20,7 +20,7 @@ pool.on('connect', () => {
 
 pool.on('error', (err) => {
   console.error('❌ Error inesperado en PostgreSQL:', err);
-  process.exit(-1);
+  // process.exit(-1); // ⚠️ NO salir en Serverless, deja que el request maneje el error
 });
 
 // Función helper para ejecutar queries
