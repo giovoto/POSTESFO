@@ -46,6 +46,7 @@ export default async function handler(req, res) {
                 altura DECIMAL(5, 2),
                 material VARCHAR(100),
                 observaciones TEXT,
+                proyecto_id UUID REFERENCES proyectos(id) ON DELETE SET NULL,
                 created_by UUID REFERENCES users(id) ON DELETE SET NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
