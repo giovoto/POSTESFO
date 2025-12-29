@@ -28,14 +28,6 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🔥 TODAS LAS RUTAS DEBEN EMPEZAR CON /api
-app.use('/api/auth', authRoutes);
-app.use('/api/postes', postesRoutes);
-app.use('/api', fotosRoutes);
-app.use('/api/users', usersRoutes);
-app.use('/api/reportes', reportesRoutes);
-app.use('/api/proyectos', proyectosRoutes);
-
 // ✅ Health check mejorado (Database Test)
 import pool from '../config/database.js';
 
@@ -58,6 +50,14 @@ app.get('/api/health', async (req, res) => {
         });
     }
 });
+
+// 🔥 TODAS LAS RUTAS DEBEN EMPEZAR CON /api
+app.use('/api/auth', authRoutes);
+app.use('/api/postes', postesRoutes);
+app.use('/api', fotosRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/reportes', reportesRoutes);
+app.use('/api/proyectos', proyectosRoutes);
 
 // ❌ NO app.listen()
 // ❌ NO ruta '/'
