@@ -22,6 +22,8 @@ export const login = async (req, res) => {
 
         // Buscar usuario
         const user = await User.findByEmail(email);
+        console.log("Login User lookup:", user ? "Found" : "Not Found", email);
+
         if (!user) {
             return res.status(401).json({
                 error: 'Credenciales inválidas'
@@ -37,6 +39,8 @@ export const login = async (req, res) => {
 
         // Verificar contraseña
         const isValidPassword = await bcrypt.compare(password, user.password_hash);
+        console.log("Login Password check:", isValidPassword ? "Valid" : "Invalid");
+
         if (!isValidPassword) {
             return res.status(401).json({
                 error: 'Credenciales inválidas'
