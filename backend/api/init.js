@@ -93,13 +93,24 @@ export default async function handler(req, res) {
             );
         `);
 
-        // 5. Crear Admin User
+        // 5. Crear Admin User (Upsert + Verify)
         const hashedPassword = await bcrypt.hash('admin123', 10);
+
+        // Insertar o Actualizar
         await pool.query(`
-            INSERT INTO users (email, password_hash, nombre, rol)
-            VALUES ($1, $2, $3, $4)
-            ON CONFLICT (email) DO NOTHING;
+            INSERT INTO users (email, password_hash, nombre, rol, activo)
+            VALUES ($1, $2, $3, $4, true)
+            ON CONFLICT (email) 
+            DO UPDATE SET 
+                password_hash = EXCLUDED.password_hash,
+                nombre = EXCLUDED.nombre,
+                rol = EXCLUDED.rol,
+                activo = true;
         `, ['admin@fiberoptic.com', hashedPassword, 'Administrador', 'admin']);
+
+        // Verificar que se creó
+        const adminCheck = await pool.query("SELECT id, email, rol, activo FROM users WHERE email = 'admin@fiberoptic.com'");
+        console.log("Admin User Check:", adminCheck.rows[0]);
 
         res.status(200).json({
             status: 'OK',
