@@ -278,7 +278,7 @@ export const PosteForm = () => {
                                 </div>
                             )}
 
-                            <form onSubmit={handleSubmit} className="space-y-8">
+                            <form onSubmit={handleSubmit} className="space-y-8 pb-24 md:pb-0">
                                 {/* Información Básica */}
                                 <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
                                     <h3 className="text-lg font-semibold text-slate-800 mb-6 flex items-center border-b border-slate-200 pb-2">
@@ -516,8 +516,8 @@ export const PosteForm = () => {
                                     </div>
                                 </div>
 
-                                {/* Botones de Acción */}
-                                <div className="flex gap-4 pt-6 mt-8 border-t border-slate-100">
+                                {/* Botones de Acción - Fijos en móvil */}
+                                <div className="fixed md:relative bottom-0 left-0 right-0 md:mt-8 bg-white border-t md:border-t-0 border-slate-200 p-4 md:p-0 flex gap-4 z-10 shadow-lg md:shadow-none">
                                     <button
                                         type="button"
                                         className="flex-1 px-6 py-3 bg-white border border-slate-300 text-slate-700 rounded-xl hover:bg-slate-50 font-semibold shadow-sm transition-all"
