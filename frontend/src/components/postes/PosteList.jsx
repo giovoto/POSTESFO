@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { postesAPI, usersAPI } from '../../services/api';
 import { useAuth } from '../../hooks/useAuth.jsx';
+import { useProyecto } from '../../hooks/useProyecto.jsx';
 import { Loader } from '../common/Loader';
 import { Navbar } from '../common/Navbar';
 import { MdAdd, MdSearch, MdFilterList, MdClear, MdPlace, MdConstruction, MdHeight, MdPerson, MdCalendarToday, MdDelete, MdEdit, MdVisibility, MdWarning } from 'react-icons/md';
@@ -9,6 +10,7 @@ import { MdAdd, MdSearch, MdFilterList, MdClear, MdPlace, MdConstruction, MdHeig
 export const PosteList = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { proyectoActivo } = useProyecto();
     const [postes, setPostes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -26,8 +28,10 @@ export const PosteList = () => {
     const itemsPerPage = 12;
 
     useEffect(() => {
-        loadPostes();
-    }, [currentPage, estadoFilter, materialFilter, userFilter, searchTerm]);
+        if (proyectoActivo) {
+            loadPostes();
+        }
+    }, [currentPage, estadoFilter, materialFilter, userFilter, searchTerm, proyectoActivo]);
 
     useEffect(() => {
         if (user?.rol === 'admin') {
@@ -60,7 +64,8 @@ export const PosteList = () => {
                 estado: estadoFilter,
                 material: materialFilter,
                 search: searchTerm,
-                created_by: userFilter
+                created_by: userFilter,
+                proyecto_id: proyectoActivo?.id
             });
 
             const list = response.data.postes || response.data || [];
