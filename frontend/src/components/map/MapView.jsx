@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 import { postesAPI } from '../../services/api';
+import { useProyecto } from '../../hooks/useProyecto.jsx';
 import { Loader } from '../common/Loader';
 import { Navbar } from '../common/Navbar';
 import 'leaflet/dist/leaflet.css';
@@ -38,18 +39,24 @@ function MapController({ center }) {
 
 export const MapView = () => {
     const navigate = useNavigate();
+    const { proyectoActivo } = useProyecto();
     const [postes, setPostes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [mapCenter, setMapCenter] = useState(null);
     const [selectedPoste, setSelectedPoste] = useState(null);
 
     useEffect(() => {
-        loadPostes();
-    }, []);
+        if (proyectoActivo) {
+            loadPostes();
+        }
+    }, [proyectoActivo]);
 
     const loadPostes = async () => {
         try {
-            const response = await postesAPI.getAll({ limit: 1000 });
+            const response = await postesAPI.getAll({
+                limit: 1000,
+                proyecto_id: proyectoActivo?.id
+            });
             setPostes(response.data.postes || []);
         } catch (err) {
             console.error('Error al cargar postes:', err);
