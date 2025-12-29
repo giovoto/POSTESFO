@@ -36,9 +36,27 @@ app.use('/api/users', usersRoutes);
 app.use('/api/reportes', reportesRoutes);
 app.use('/api/proyectos', proyectosRoutes);
 
-// ✅ Health check (IMPORTANTE)
-app.get('/api/health', (req, res) => {
-    res.json({ status: 'OK', timestamp: new Date().toISOString() });
+// ✅ Health check mejorado (Database Test)
+import pool from '../config/database.js';
+
+app.get('/api/health', async (req, res) => {
+    try {
+        await pool.query('SELECT NOW()');
+        res.json({
+            status: 'OK',
+            database: 'Connected',
+            timestamp: new Date().toISOString(),
+            env: process.env.NODE_ENV
+        });
+    } catch (error) {
+        console.error('Health Check DB Error:', error);
+        res.status(500).json({
+            status: 'Error',
+            database: 'Disconnected',
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
 });
 
 // ❌ NO app.listen()
