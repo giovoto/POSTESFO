@@ -44,7 +44,11 @@ export const createPoste = async (req, res) => {
         });
     } catch (error) {
         console.error('Error al crear poste:', error);
-        res.status(500).json({ error: 'Error en el servidor' });
+        res.status(500).json({
+            error: error.message,
+            details: error.stack,
+            type: 'CreatePosteError'
+        });
     }
 };
 
