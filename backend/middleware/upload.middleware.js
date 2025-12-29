@@ -6,10 +6,16 @@ import fs from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Crear directorio de uploads si no existe
+// Crear directorio de uploads si no existe (solo para desarrollo local)
+// En Vercel/serverless, usamos memoryStorage, así que esto no es necesario
 const uploadDir = path.join(__dirname, '../../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+} catch (error) {
+    // Ignorar en entornos serverless donde el filesystem es read-only
+    console.log('Upload directory creation skipped (serverless environment)');
 }
 
 // Configuración de almacenamiento
