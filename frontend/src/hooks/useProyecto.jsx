@@ -21,7 +21,7 @@ export const ProyectoProvider = ({ children }) => {
             const savedProyectoId = localStorage.getItem('proyectoActivo');
 
             if (savedProyectoId) {
-                const proyecto = proyectos.find(p => p.id === parseInt(savedProyectoId));
+                const proyecto = proyectos.find(p => String(p.id) === String(savedProyectoId));
                 if (proyecto) {
                     setProyectoActivo(proyecto);
                     return;
@@ -30,7 +30,7 @@ export const ProyectoProvider = ({ children }) => {
 
             // No saved proyecto or not found, use first one
             setProyectoActivo(proyectos[0]);
-            localStorage.setItem('proyectoActivo', proyectos[0].id);
+            localStorage.setItem('proyectoActivo', String(proyectos[0].id));
         }
     }, [proyectos]); // ONLY depend on proyectos, NOT proyectoActivo!
 
@@ -48,10 +48,21 @@ export const ProyectoProvider = ({ children }) => {
     };
 
     const cambiarProyecto = (proyectoId) => {
-        const proyecto = proyectos.find(p => p.id === parseInt(proyectoId));
+        console.log('Cambiando proyecto a:', proyectoId, 'tipo:', typeof proyectoId);
+        console.log('Proyectos disponibles:', proyectos.map(p => ({ id: p.id, tipo: typeof p.id })));
+
+        // Asegurar que ambos IDs sean strings para la comparación
+        const targetId = String(proyectoId);
+        const proyecto = proyectos.find(p => String(p.id) === targetId);
+
+        console.log('Proyecto encontrado:', proyecto);
+
         if (proyecto) {
             setProyectoActivo(proyecto);
-            localStorage.setItem('proyectoActivo', proyectoId.toString());
+            localStorage.setItem('proyectoActivo', String(proyecto.id));
+            console.log('Proyecto activo cambiado a:', proyecto.nombre);
+        } else {
+            console.error('Proyecto no encontrado con ID:', proyectoId);
         }
     };
 
