@@ -15,7 +15,7 @@ const ESTADO_COLORS = {
     fuera_servicio: '#6b7280' // gray-500
 };
 
-const MATERIAL_COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6'];
+const MATERIAL_COLORS = ['#42CB09', '#14b8a6', '#0ea5e9', '#6366f1'];
 
 export const Dashboard = () => {
     const { user } = useAuth();
@@ -128,8 +128,8 @@ export const Dashboard = () => {
                             <StatCard
                                 title="Total Postes"
                                 value={stats?.total || 0}
-                                icon={<MdFiberManualRecord className="h-6 w-6 text-blue-600" />}
-                                bgIcon="bg-blue-100"
+                                icon={<MdFiberManualRecord className="h-6 w-6 text-[var(--primary-color)]" />}
+                                bgIcon="bg-green-50"
                             />
                             <StatCard
                                 title="Operativos"
@@ -214,7 +214,7 @@ export const Dashboard = () => {
                                                     cursor={{ fill: '#f1f5f9' }}
                                                     contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                                 />
-                                                <Bar dataKey="value" fill="#3b82f6" radius={[6, 6, 6, 6]} barSize={40}>
+                                                <Bar dataKey="value" fill="var(--primary-color)" radius={[6, 6, 6, 6]} barSize={40}>
                                                     {chartData.materiales.map((entry, index) => (
                                                         <Cell key={`cell-${index}`} fill={entry.color} />
                                                     ))}
@@ -235,7 +235,7 @@ export const Dashboard = () => {
                                 title="Nuevo Poste"
                                 description="Registrar infraestructura"
                                 icon={<MdAdd className="h-8 w-8 text-white" />}
-                                gradient="from-violet-500 to-purple-600"
+                                gradient="bg-[var(--primary-color)]"
                             />
                             <ActionCard
                                 to="/mapa"

@@ -7,6 +7,7 @@ import { Loader } from '../common/Loader';
 import { ProyectoSelector } from './ProyectoSelector';
 import { useProyecto } from '../../hooks/useProyecto';
 import { useToast } from '../common/Toast';
+import { MdFolder, MdAdd, MdPeople, MdPlace, MdEdit, MdDelete, MdLocationOn } from 'react-icons/md';
 import './Proyectos.css';
 
 export const ProyectoList = () => {
@@ -72,9 +73,7 @@ export const ProyectoList = () => {
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                         <div>
                             <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
-                                <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                                </svg>
+                                <MdFolder className="w-8 h-8 text-[var(--primary-color)]" />
                                 Gestión de Proyectos
                             </h1>
                             <p className="text-slate-500 mt-2 text-lg">
@@ -89,10 +88,10 @@ export const ProyectoList = () => {
 
                             {user?.rol === 'admin' && (
                                 <button
-                                    className="btn btn-primary flex items-center gap-2 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
+                                    className="btn-primary inline-flex items-center px-6 py-3 rounded-xl gap-2 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 font-bold"
                                     onClick={() => navigate('/proyectos/nuevo')}
                                 >
-                                    <span className="text-xl">+</span> Nuevo Proyecto
+                                    <MdAdd className="text-xl text-white" /> Nuevo Proyecto
                                 </button>
                             )}
                         </div>
@@ -110,7 +109,7 @@ export const ProyectoList = () => {
                                 <div className="p-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <div>
-                                            <h3 className="text-xl font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors">
+                                            <h3 className="text-xl font-bold text-slate-800 mb-1 group-hover:text-[var(--primary-color)] transition-colors">
                                                 {proyecto.nombre}
                                             </h3>
                                             <span className="inline-block px-2 py-0.5 rounded text-xs font-mono bg-slate-100 text-slate-500 border border-slate-200">
@@ -118,8 +117,8 @@ export const ProyectoList = () => {
                                             </span>
                                         </div>
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide ${proyecto.estado === 'activo'
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-slate-100 text-slate-600'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-slate-100 text-slate-600'
                                             }`}>
                                             {proyecto.estado}
                                         </span>
@@ -131,37 +130,32 @@ export const ProyectoList = () => {
 
                                     <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-slate-50 rounded-lg">
                                         <div className="flex items-center gap-3">
-                                            <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                                </svg>
+                                            <div className="p-2 bg-green-100 rounded-lg text-[var(--primary-color)]">
+                                                <MdPeople className="w-5 h-5" />
                                             </div>
                                             <div>
                                                 <span className="block text-lg font-bold text-slate-800 leading-none">
                                                     {proyecto.total_usuarios || 0}
                                                 </span>
-                                                <span className="text-xs text-slate-500 font-medium uppercase">Usuarios</span>
+                                                <span className="text-xs text-slate-500 font-medium uppercase text-nowrap">Usuarios</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
+                                            <div className="p-2 bg-teal-100 rounded-lg text-teal-600">
+                                                <MdLocationOn className="w-5 h-5" />
                                             </div>
                                             <div>
                                                 <span className="block text-lg font-bold text-slate-800 leading-none">
                                                     {proyecto.total_postes || 0}
                                                 </span>
-                                                <span className="text-xs text-slate-500 font-medium uppercase">Postes</span>
+                                                <span className="text-xs text-slate-500 font-medium uppercase text-nowrap">Postes</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     {proyecto.ubicacion && (
                                         <div className="flex items-center gap-2 text-sm text-slate-500 mb-6 px-1">
-                                            <span className="text-red-500">📍</span>
+                                            <MdPlace className="text-[var(--primary-color)]" />
                                             <span className="truncate">{proyecto.ubicacion}</span>
                                         </div>
                                     )}
@@ -176,18 +170,18 @@ export const ProyectoList = () => {
                                         {user?.rol === 'admin' && (
                                             <>
                                                 <button
-                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                                    className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                                                     title="Editar"
                                                     onClick={() => navigate(`/proyectos/${proyecto.id}/editar`)}
                                                 >
-                                                    ✏️
+                                                    <MdEdit size={20} />
                                                 </button>
                                                 <button
                                                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                                     title="Eliminar"
                                                     onClick={() => handleDelete(proyecto.id)}
                                                 >
-                                                    🗑️
+                                                    <MdDelete size={20} />
                                                 </button>
                                             </>
                                         )}

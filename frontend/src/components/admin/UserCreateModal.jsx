@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { authAPI } from '../../services/api';
+import { MdAdd, MdClose, MdPerson } from 'react-icons/md';
 import './UserCreateModal.css';
 
 export const UserCreateModal = ({ isOpen, onClose, onUserCreated }) => {
@@ -44,8 +45,13 @@ export const UserCreateModal = ({ isOpen, onClose, onUserCreated }) => {
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
-                    <h2>➕ Crear Nuevo Usuario</h2>
-                    <button className="modal-close" onClick={onClose}>✕</button>
+                    <h2 className="flex items-center gap-2">
+                        <MdPerson className="text-[var(--primary-color)]" />
+                        Crear Nuevo Usuario
+                    </h2>
+                    <button className="modal-close" onClick={onClose}>
+                        <MdClose size={24} />
+                    </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="user-form">

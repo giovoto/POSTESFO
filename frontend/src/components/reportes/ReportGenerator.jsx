@@ -109,7 +109,7 @@ export const ReportGenerator = () => {
                     {/* Header */}
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-                            <MdBarChart className="mr-3 text-blue-600" />
+                            <MdBarChart className="mr-3 text-[var(--primary-color)]" />
                             Reportes y Estadísticas
                         </h1>
                         <p className="text-gray-600 mt-2">
@@ -120,19 +120,19 @@ export const ReportGenerator = () => {
                     {/* Estadísticas Generales */}
                     {stats && (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div className="bg-white rounded-xl shadow-md p-6">
+                            <div className="bg-white rounded-xl shadow-md p-6 border-b-4 border-[var(--primary-color)]">
                                 <h3 className="text-sm font-medium text-gray-600 mb-2">Total de Postes</h3>
-                                <p className="text-4xl font-bold text-blue-600">{stats.total}</p>
+                                <p className="text-4xl font-bold text-[var(--primary-color)]">{stats.total}</p>
                             </div>
 
-                            <div className="bg-white rounded-xl shadow-md p-6">
+                            <div className="bg-white rounded-xl shadow-md p-6 border-b-4 border-teal-500">
                                 <h3 className="text-sm font-medium text-gray-600 mb-2">Altura Promedio</h3>
-                                <p className="text-4xl font-bold text-green-600">{stats.altura_promedio}m</p>
+                                <p className="text-4xl font-bold text-teal-600">{stats.altura_promedio}m</p>
                             </div>
 
-                            <div className="bg-white rounded-xl shadow-md p-6">
+                            <div className="bg-white rounded-xl shadow-md p-6 border-b-4 border-green-400">
                                 <h3 className="text-sm font-medium text-gray-600 mb-2">Estados Registrados</h3>
-                                <p className="text-4xl font-bold text-purple-600">
+                                <p className="text-4xl font-bold text-green-600">
                                     {Object.keys(stats.por_estado).length}
                                 </p>
                             </div>
@@ -153,7 +153,7 @@ export const ReportGenerator = () => {
                                             <div className="flex items-center">
                                                 <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
                                                     <div
-                                                        className="bg-blue-600 h-2 rounded-full"
+                                                        className="bg-[var(--primary-color)] h-2 rounded-full"
                                                         style={{ width: `${(count / stats.total) * 100}%` }}
                                                     ></div>
                                                 </div>
@@ -177,7 +177,7 @@ export const ReportGenerator = () => {
                                             <div className="flex items-center">
                                                 <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
                                                     <div
-                                                        className="bg-green-600 h-2 rounded-full"
+                                                        className="bg-teal-600 h-2 rounded-full"
                                                         style={{ width: `${(count / stats.total) * 100}%` }}
                                                     ></div>
                                                 </div>
@@ -195,7 +195,7 @@ export const ReportGenerator = () => {
                     {/* Generador de Reportes */}
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
-                            <MdFilterList className="mr-2 text-blue-600" />
+                            <MdFilterList className="mr-2 text-[var(--primary-color)]" />
                             Generar Reporte Personalizado
                         </h2>
 

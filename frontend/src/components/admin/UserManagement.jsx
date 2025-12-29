@@ -157,7 +157,7 @@ export const UserManagement = () => {
                     </div>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                        className="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[var(--primary-color)] hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)] transition-colors"
                     >
                         <MdAdd className="mr-2 h-5 w-5" />
                         Nuevo Usuario
@@ -173,8 +173,8 @@ export const UserManagement = () => {
 
                 {/* Stats Summary */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 animate-fade-in-up delay-100">
-                    <SummaryCard title="Total Usuarios" value={users.length} color="text-blue-600" />
-                    <SummaryCard title="Administradores" value={users.filter(u => u.rol === 'admin').length} color="text-purple-600" />
+                    <SummaryCard title="Total Usuarios" value={users.length} color="text-slate-800" />
+                    <SummaryCard title="Administradores" value={users.filter(u => u.rol === 'admin').length} color="text-[var(--primary-color)]" />
                     <SummaryCard title="Técnicos" value={users.filter(u => u.rol === 'tecnico').length} color="text-teal-600" />
                     <SummaryCard title="Activos" value={users.filter(u => u.activo !== false).length} color="text-green-600" />
                 </div>
@@ -199,7 +199,7 @@ export const UserManagement = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center">
                                                 <div className="flex-shrink-0 h-10 w-10">
-                                                    <div className={`h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm ${user.rol === 'admin' ? 'bg-gradient-to-br from-purple-500 to-indigo-600' : 'bg-gradient-to-br from-blue-500 to-teal-500'}`}>
+                                                    <div className={`h-10 w-10 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-sm ${user.rol === 'admin' ? 'bg-gradient-to-br from-[var(--primary-color)] to-[var(--primary-dark)]' : 'bg-gradient-to-br from-teal-400 to-teal-600'}`}>
                                                         {user.nombre?.charAt(0).toUpperCase() || 'U'}
                                                     </div>
                                                 </div>
@@ -212,7 +212,7 @@ export const UserManagement = () => {
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="relative">
                                                 <select
-                                                    className={`block w-full pl-3 pr-8 py-1 text-xs font-semibold rounded-full border-none focus:outline-none focus:ring-2 focus:ring-offset-1 transition-all cursor-pointer shadow-sm appearance-none ${user.rol === 'admin' ? 'bg-purple-100 text-purple-700 focus:ring-purple-500' : 'bg-blue-100 text-blue-700 focus:ring-blue-500'}`}
+                                                    className={`block w-full pl-3 pr-8 py-1 text-xs font-semibold rounded-full border-none focus:outline-none focus:ring-2 focus:ring-offset-1 transition-all cursor-pointer shadow-sm appearance-none ${user.rol === 'admin' ? 'bg-green-100 text-green-700 focus:ring-[var(--primary-color)]' : 'bg-teal-50 text-teal-700 focus:ring-teal-500'}`}
                                                     value={user.rol}
                                                     onChange={(e) => handleRoleChange(user.id, e.target.value)}
                                                     disabled={user.id === currentUser?.id}
@@ -221,8 +221,8 @@ export const UserManagement = () => {
                                                     <option value="tecnico">Técnico</option>
                                                 </select>
                                                 {user.rol === 'admin' ?
-                                                    <MdAdminPanelSettings className="absolute right-2 top-1.5 h-4 w-4 text-purple-500 pointer-events-none" /> :
-                                                    <MdPerson className="absolute right-2 top-1.5 h-4 w-4 text-blue-500 pointer-events-none" />
+                                                    <MdAdminPanelSettings className="absolute right-2 top-1.5 h-4 w-4 text-green-600 pointer-events-none" /> :
+                                                    <MdPerson className="absolute right-2 top-1.5 h-4 w-4 text-teal-600 pointer-events-none" />
                                                 }
                                             </div>
                                         </td>
@@ -255,7 +255,7 @@ export const UserManagement = () => {
                                                         setSelectedUser(user);
                                                         setShowProyectosModal(true);
                                                     }}
-                                                    className="p-1.5 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+                                                    className="p-1.5 bg-green-50 text-[var(--primary-color)] rounded-lg hover:bg-green-100 transition-colors"
                                                     title="Asignar Proyectos"
                                                 >
                                                     <MdAssignment className="h-5 w-5" />

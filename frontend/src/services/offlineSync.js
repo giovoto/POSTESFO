@@ -22,7 +22,7 @@ export const syncPendingData = async () => {
     }
 
     isSyncing = true;
-    console.log('🔄 Iniciando sincronización...');
+    console.log('[SYNC] Iniciando sincronización...');
 
     try {
         // Obtener items PENDING ordenados por ID (FIFO)
@@ -31,7 +31,7 @@ export const syncPendingData = async () => {
             .sortBy('id');
 
         if (pendingItems.length === 0) {
-            console.log('✅ No hay datos pendientes de sincronizar');
+            console.log('[SYNC] No hay datos pendientes de sincronizar');
             return;
         }
 
@@ -67,7 +67,7 @@ export const syncPendingData = async () => {
             }
         }
 
-        console.log('✅ Ciclo de sincronización completado');
+        console.log('[SYNC] Ciclo de sincronización completado');
 
         // Emitir evento
         window.dispatchEvent(new CustomEvent('syncCompleted', {

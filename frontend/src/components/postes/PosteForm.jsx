@@ -252,13 +252,17 @@ export const PosteForm = () => {
             <div className="min-h-screen bg-slate-50 py-8 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+                        {/* Header */}
                         <div className="bg-[var(--primary-color)] px-8 py-6 flex justify-between items-center text-white">
-                            <h2 className="text-2xl font-bold tracking-tight">
-                                {id ? 'Editar Poste' : 'Nuevo Poste'}
-                            </h2>
+                            <div className="flex items-center gap-3">
+                                <MdCameraAlt className="text-2xl" />
+                                <h2 className="text-2xl font-bold tracking-tight text-white m-0">
+                                    {id ? 'Editar Poste' : 'Nuevo Poste'}
+                                </h2>
+                            </div>
                             {!isOnline && (
-                                <div className="animate-pulse flex items-center bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold shadow-sm">
-                                    <MdWifiOff className="mr-1" /> Modo Offline
+                                <div className="animate-pulse flex items-center bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-bold border border-white/30">
+                                    <MdWifiOff className="mr-1" /> Offline
                                 </div>
                             )}
                         </div>
@@ -550,77 +554,81 @@ export const PosteForm = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             {/* Modal de Selección de Fuente de Foto */}
-            {showPhotoOptions && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up">
-                        <h3 className="text-xl font-bold text-slate-800 mb-4">Agregar Foto</h3>
-                        <p className="text-sm text-slate-600 mb-6">¿Cómo deseas agregar la foto?</p>
+            {
+                showPhotoOptions && (
+                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-fade-in-up">
+                            <h3 className="text-xl font-bold text-slate-800 mb-4">Agregar Foto</h3>
+                            <p className="text-sm text-slate-600 mb-6">¿Cómo deseas agregar la foto?</p>
 
-                        <div className="space-y-3">
-                            {/* Opción: Tomar foto con cámara */}
+                            <div className="space-y-3">
+                                {/* Opción: Tomar foto con cámara */}
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowPhotoOptions(false);
+                                        setShowCamera(true);
+                                    }}
+                                    className="w-full flex items-center justify-between p-4 border-2 border-slate-200 rounded-lg hover:border-[var(--primary-color)] hover:bg-green-50 transition-all group"
+                                >
+                                    <div className="flex items-center">
+                                        <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-[var(--primary-color)] group-hover:text-white transition-colors">
+                                            <MdCameraAlt className="h-6 w-6" />
+                                        </div>
+                                        <div className="ml-4 text-left">
+                                            <div className="font-semibold text-slate-800">Tomar Foto</div>
+                                            <div className="text-sm text-slate-500">Usar la cámara del dispositivo</div>
+                                        </div>
+                                    </div>
+                                </button>
+
+                                {/* Opción: Adjuntar desde archivos */}
+                                <label className="w-full flex items-center justify-between p-4 border-2 border-slate-200 rounded-lg hover:border-[var(--primary-color)] hover:bg-green-50 transition-all group cursor-pointer">
+                                    <div className="flex items-center">
+                                        <div className="p-3 bg-purple-100 rounded-lg group-hover:bg-[var(--primary-color)] group-hover:text-white transition-colors">
+                                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                            </svg>
+                                        </div>
+                                        <div className="ml-4 text-left">
+                                            <div className="font-semibold text-slate-800">Adjuntar Archivo</div>
+                                            <div className="text-sm text-slate-500">Seleccionar desde galería</div>
+                                        </div>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleFileUpload}
+                                        className="hidden"
+                                    />
+                                </label>
+                            </div>
+
                             <button
                                 type="button"
-                                onClick={() => {
-                                    setShowPhotoOptions(false);
-                                    setShowCamera(true);
-                                }}
-                                className="w-full flex items-center justify-between p-4 border-2 border-slate-200 rounded-lg hover:border-[var(--primary-color)] hover:bg-green-50 transition-all group"
+                                onClick={() => setShowPhotoOptions(false)}
+                                className="mt-6 w-full py-2.5 px-4 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 font-medium transition-colors"
                             >
-                                <div className="flex items-center">
-                                    <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-[var(--primary-color)] group-hover:text-white transition-colors">
-                                        <MdCameraAlt className="h-6 w-6" />
-                                    </div>
-                                    <div className="ml-4 text-left">
-                                        <div className="font-semibold text-slate-800">Tomar Foto</div>
-                                        <div className="text-sm text-slate-500">Usar la cámara del dispositivo</div>
-                                    </div>
-                                </div>
+                                Cancelar
                             </button>
-
-                            {/* Opción: Adjuntar desde archivos */}
-                            <label className="w-full flex items-center justify-between p-4 border-2 border-slate-200 rounded-lg hover:border-[var(--primary-color)] hover:bg-green-50 transition-all group cursor-pointer">
-                                <div className="flex items-center">
-                                    <div className="p-3 bg-purple-100 rounded-lg group-hover:bg-[var(--primary-color)] group-hover:text-white transition-colors">
-                                        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                        </svg>
-                                    </div>
-                                    <div className="ml-4 text-left">
-                                        <div className="font-semibold text-slate-800">Adjuntar Archivo</div>
-                                        <div className="text-sm text-slate-500">Seleccionar desde galería</div>
-                                    </div>
-                                </div>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleFileUpload}
-                                    className="hidden"
-                                />
-                            </label>
                         </div>
-
-                        <button
-                            type="button"
-                            onClick={() => setShowPhotoOptions(false)}
-                            className="mt-6 w-full py-2.5 px-4 border border-slate-300 rounded-lg text-slate-700 hover:bg-slate-50 font-medium transition-colors"
-                        >
-                            Cancelar
-                        </button>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* Modal de Cámara */}
-            {showCamera && (
-                <CameraCapture
-                    onCapture={handlePhotoCapture}
-                    onClose={() => setShowCamera(false)}
-                />
-            )}
+            {
+                showCamera && (
+                    <CameraCapture
+                        onCapture={handlePhotoCapture}
+                        onClose={() => setShowCamera(false)}
+                    />
+                )
+            }
         </>
     );
 };
