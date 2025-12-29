@@ -10,7 +10,7 @@ const { Pool } = pg;
 const connectionString = process.env.POSTGRES_URL || process.env.DATABASE_URL;
 
 const pool = new Pool({
-  connectionString: connectionString ? connectionString.split('?')[0] : undefined, // Strip params to prevent issues
+  connectionString: connectionString, // Use full string, Supabase might need params
   ssl: { rejectUnauthorized: false },
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
